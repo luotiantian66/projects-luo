@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Game of Thrones</title>
+	<link rel="stylesheet" href="http://at.alicdn.com/t/font_466097_euzm4ztafsi3sor.css">
+	<style>
+	    /*common css */
+		* {
+			padding:0;
+			margin:0;
+			box-sizing: border-box;
+		}
+		a {
+			text-decoration: none;
+		}
+		li {
+			list-style: none;
+		}
+		html,body {
+	    	height: 100%;
+	    }
+	    body {
+			font: 14px/1.5 Arial;
+
+	    }
+	    .clearfix::after {
+	    	content: '';
+	    	display: block;
+	    	clear: both;
+	    }
+	    .layout {
+	    	text-align: center;
+	    }
+	    section > h1 {
+			font-size:40px;
+			font-family: Helvetica;
+			padding-top: 150px;
+		}
+		section > i {
+			font-size: 20px;
+			color: #6C6C6C;	
+		}
+		section li p {
+			margin-top: 15px;
+			color:#6C6C6C;
+		}
+		#team span, .footer span {
+			padding: 8px;
+			color:#272727;
+			font-size: 36px;
+		}
+		
+		
+	    /*header*/ 
+		header {
+			height: 100%;
+			background: #000 url(http://splashreport.com/wp-content/uploads/2017/05/got-s7-poster.jpg) left no-repeat;
+			background-size: contain;
+		}
+		.logo {
+			float: left;
+			font-size: 40px;
+			font-family: Helvetica;
+			color: #fed136;
+			margin: 5px 20px;
+
+		}
+		.navbar > ul {
+			float: right;
+		}
+		.navbar > ul >li {
+			display: inline-block;
+			float:left;
+			margin: 25px 10px;
+		}
+		.navbar > ul >li >a {
+			font-family: Helvetica;
+			font-size: 20px;
+			color: #fff;
+			padding:10px;
+		}
+		.navbar ul a:hover {
+			background-color: #fed136;
+		}
+		.intro {
+			margin-top: 300px;
+		}
+		.intro > h1 {
+			font-size: 34px;
+			font-family: Arial ;
+			color: #fff;
+			margin-bottom: 5px;
+		}
+		.intro > p {
+			font-size: 42px;
+			font-family: Trebuchet MS;
+			color: #fff;
+			margin-bottom: 15px;
+		}
+		.intro > a  {
+			font-size: 18px;
+			color: #fff;
+			padding:20px;
+			background-color: #fed136;
+			border-radius: 3px;
+		}
+		.intro > a:hover {
+			opacity: 0.8;
+		}
+		/*main*/
+		#family img {
+			width: 80px;
+			height: 80px;
+			border-radius: 50%;
+		}
+		#family li {
+			display: inline-block;
+			width: 16.6666%;
+			float:left;
+			background-color: #fff;
+			padding-top:60px;
+			padding-bottom: 100px;
+		}
+
+		#character {
+			background: #F0F0F0;
+		}
+		#character img {
+			width: 330px;
+			height: 220px;
+		}
+		#character {
+			padding-bottom: 150px;
+		}
+		#character li {
+			display: inline-block;
+			float: left;
+			width: 33.3333%;
+			margin-top: 30px;
+		}
+		#character li div {
+			display: inline-block;
+			width: 330px;
+			height: 280px;
+			background-color: #fff;	
+		}
+		#character li i {
+			color: #6C6C6C;
+		}
+		#character li img:hover {
+			opacity: 0.7;
+		}
+
+		#timeline li::after {
+			content: '';
+	    	display: block;
+	    	clear: both;
+		}
+		#timeline > ul > li:nth-child(odd){
+			padding: 50px 0;
+			margin-left: calc(50% - 100px);
+			text-align: left;
+		}
+		#timeline img {	
+			float: left;
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			border:5px solid lightgrey;
+		}
+		#timeline > ul > li:nth-child(even){
+			padding: 50px 0;
+			margin-right: calc(50% - 100px);
+			text-align: right;
+		}
+		#timeline :nth-child(even) img {	
+			float: right;
+		}
+		#timeline > ul > li:nth-child(odd) div{
+			padding: 30px 30px 0 230px;
+		}
+		#timeline > ul > li:nth-child(even) div{
+			padding: 30px 230px 0 30px;
+		}
+		#timeline li {
+			position: relative;
+			margin: 0 50px;
+		}
+		#timeline li:nth-child(odd)::before {
+			content: '';
+			position: absolute;
+			display: inline-block;
+			height: 110px;
+			width: 2px;
+			left: 100px;
+			top: 250px;
+			background-color: lightgrey;
+		}
+		#timeline li:nth-child(even)::before {
+			content: '';
+			position: absolute;
+			display: inline-block;
+			height: 110px;
+			width: 2px;
+			right: 100px;
+			top: 250px;
+			background-color: lightgrey;
+		}
+		#timeline dt {
+			font: 16px Arial;
+		}
+		#timeline dd {
+			color: #6C6C6C;	
+		}
+		#timeline > div {
+			width: 200px;
+			height: 200px;
+			border-radius: 50%;
+			border:5px solid lightgrey;
+			background-color: #fed136;
+			margin: 0 auto;
+			margin-top:60px;
+			margin-bottom: 150px;
+		}
+		#timeline > div > p {
+			margin-top: 60px;
+			width: 180px;
+			font-size: 20px;
+			color:#fff;
+		}
+
+		#team {
+			background: #F0F0F0;
+		}
+		#team img {
+			width: 200px;
+			height: 270px;
+			border-radius: 50%;
+			border:5px solid white;
+		}
+		#team .ct {
+			margin: 60px 0 100px 0;
+			display: inline-block;
+			width: 30%;
+		}
+		#team span:hover {
+			color: #fed136;
+		}
+		
+		#contact {
+			height: 100%;
+			background: #000 url(http://wallpapercave.com/wp/1ecsoou.jpg);
+			padding-bottom: 100px;
+		}
+		#contact h1, #contact i {
+			color: #fff;
+		}
+		
+
+
+		#contact a {
+			font-family: Helvetica;
+			font-size: 20px;
+			color: #fff;
+			padding:10px;
+			background-color: #fed136;
+		}
+		#contact a:hover {
+			opacity: 0.8;
+		}
+		#contact i {
+			display: block;
+		}
+		#contact .blk {
+			width: 90%;
+			height: 240px;
+			margin:120px auto;
+		}
+		#contact .ct {
+			display: inline-block;
+			float: left;
+			height: 240px;
+			width: 50%;
+		}
+		#contact input {
+			display: block;
+			margin-left: 5%;
+			margin-bottom: 10px;
+			width: 90%;
+			height: 30%;
+			border-radius: 3px;
+			font-size: 18px;
+		}
+		#contact textarea {
+			display: inline-block;
+			margin-right: 5%;
+			float: right;
+			height: 99%;
+			width: 90%;
+			border-radius: 3px;
+			font-size: 18px;
+			padding: 20px;
+		}
+		#contact  > a  {
+			font-size: 18px;
+			color: #fff;
+			padding:20px;
+			background-color: #fed136;
+			border-radius: 3px;
+		}
+
+		.footer {
+			width: 90%;
+			height: 100px;
+			margin:0 auto;
+		}
+		.footer span:hover {
+			color: #fed136;
+		}
+		.footer div {
+			display: inline-block;
+			margin-top: 0;
+			padding: 30px;
+			height: 80%;
+			width: 30%;
+		}
+		.footer li {
+			display: inline-block;
+			padding: 10px;
+		}
+		.footer li a {
+			color: #fed136;
+		}
+		.footer li a:hover {
+			text-decoration: underline;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="navbar clearfix">
+			<a href="#" class="logo">Game of Thrones</a>
+			<ul>
+				<li><a href="#family">FAMILY</a></li>
+				<li><a href="#character">CHARACTER</a></li>
+				<li><a href="#timeline">TIMELINE</a></li>
+				<li><a href="#team">TEAM</a></li>
+				<li><a href="#contact">CONTACT</a></li>
+			</ul>
+		</div>
+		<div class="intro layout">
+			<h1>WINTER IS COMING!</h1>
+			<p>ALONE WOLF DIES,WOLVES LIVE.</p>
+			<a class="btn" href="#">TELL ME MORE</a>
+		</div>
+	</header>
+	<main class="layout">
+		<section id="family">
+			<h1>FAMILY</h1>
+			<i>Family Introduction</i>
+			<ul class="clearfix">
+				<li>
+					<a href="#">
+						<img src="http://imgsrc.baidu.com/forum/pic/item/cf82928ba61ea8d3ae0415a6970a304e241f58e2.jpg">
+					</a>
+					<h3>House Stark</h3>
+					<p>House Stark of Winterfell is a Great House of Westeros, ruling over the vast region known as the North from their seat in Winterfell. It is one of the oldest lines of Westerosi nobility by far.</p>
+				</li>
+				<li>
+					<a href="#"><img src="http://imgsrc.baidu.com/forum/pic/item/b6e8e603738da977910fe789b051f8198718e3ed.jpg"></a>
+					<h3>House Baratheon</h3>
+					<p>House Baratheon of Storm's End is one of the Great Houses of Westeros, and is the principal house in the stormlands, which they rule as Lords Paramount of the Stormlands. </p>
+				</li>
+				<li>
+					<a href="#"><img src="http://imgsrc.baidu.com/forum/pic/item/a5962d6d55fbb2fb942939b04f4a20a44723dc8f.jpg"></a>
+					<h3>House Lannister</h3>
+					<p>House Lannister of Casterly Rock is one of the Great Houses of Westeros, one of its richest and most powerful families and oldest dynasties.</p>
+				</li>
+				<li>
+					<a href="#"><img src="http://imgsrc.baidu.com/forum/pic/item/40494c6034a85edfb3e49f8149540923dc5475a4.jpg"></a>
+					<h3>House Tully</h3>
+					<p>House Tully of Riverrun is an exiled Great House of Westeros. Its most senior member carried the title of Lord of Riverrun and Lord Paramount of the Trident, until the Red Wedding</p>
+				</li>
+				<li>
+					<a href="#"><img src="http://imgsrc.baidu.com/forum/pic/item/8a715b36acaf2eddbba9284b8d1001e9380193b4.jpg"></a>
+					<h3>House Greyjoy</h3>
+					<p>House Greyjoy of Pyke is one of the Great Houses of Westeros. It rules over the Iron Islands, a harsh and bleak collection of islands off the west coast of Westeros, from the castle at Pyke.  </p>
+				</li>
+				<li>
+					<img src="http://imgsrc.baidu.com/forum/pic/item/e7adbd6eddc451daf8416d49b6fd5266d1163251.jpg">
+					<h3>House Targaryen</h3>
+					<p>House Targaryen is a noble family of Valyrian descent who once ruled the Seven Kingdoms of Westeros. The Targaryen sigil is a three-headed dragon breathing flames, red on black.</p>
+				</li>
+			</ul>
+		</section>
+		<section id="character">
+			<h1>CHARACTER</h1>
+			<i>Character Introduction</i>
+			<ul class="clearfix">
+				<li>
+					<div>
+						<a href="#">
+							<img src="http://www.newsgoals.com/wp-content/uploads/2016/08/Jon-Snow-11.jpg">
+						</a>
+					<h3>Jon SNOW</h3>
+					<i>Son of Lyanna Stark and Rhaegar Targaryen</i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<a href="#">
+							<img src="http://images4.fanpop.com/image/photos/20300000/Jaime-Lannister-game-of-thrones-20317262-1280-720.jpg">
+						</a>
+					<h3>Jaime Lannister</h3>
+					<i>Knight of the Kingsguard </i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<a href="#">
+							<img src="http://g.hiphotos.baidu.com/baike/c0%3Dbaike60%2C5%2C5%2C60%2C20/sign=07e4be5ad72a6059461de948495d5ffe/a686c9177f3e67099fd6176c3bc79f3df9dc554a.jpg">
+					<h3>Bran Stark</h3>
+						</a>
+					<i>New Three-Eyed Raven</i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<a href="#">
+							<img src="http://images4.fanpop.com/image/photos/23800000/Daenerys-Targaryen-daenerys-targaryen-23814879-1920-1080.jpg">
+					<h3>Daenerys Targaryen</h3>
+						</a>
+					<i>Known as Dany and Daenerys Stormborn</i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<a href="#">
+							<img src="https://static.independent.co.uk/s3fs-public/thumbnails/image/2016/06/28/13/cersei-got.jpg">
+						</a>
+					<h3>Cersei Lannister</h3>
+					<i>Queen Cersei I Lannister</i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<a href="#">
+								<img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1509896586958&di=659db5628939d937cc582e9a06d0ff67&imgtype=0&src=http%3A%2F%2Fcs.xinpianchang.com%2Fuploadfile%2Fgroup%2F20161005%2F14756507011177.jpg">
+						</a>
+					<h3>Tyrion Lannister</h3>
+					<i>Also referred to a"the Imp" or "the Halfman</i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<a href="#">
+							<img src="http://nerdist.com/wp-content/uploads/2017/08/the-night-king-game-of-thrones-featured.jpg">
+						</a>
+					<h3>The Night King</h3>
+					<i>The 13th lord commander of the Night's Watc</i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<a href="#">
+							<img src="http://images6.fanpop.com/image/photos/34700000/Arya-Stark-arya-stark-34761319-1280-720.png">
+						</a>
+					<h3>Arya Star</h3>
+					<i>Also a skinchanger</i>
+					</div>
+				</li>
+				<li>
+					<div>
+						<a href="#">
+							<img src="http://nerdist.com/wp-content/uploads/2016/01/Sansa-Stark.jpg">
+						</a>
+					<h3>Sansa Stark</h3>
+					<i>Elder sister of Arya Star</i>
+					</div>
+				</li>
+			</ul>
+		</section>
+		<section id="timeline">
+			<h1>TIMELINE</h1>
+			<i>Timeline Introduction</i>
+			<ul>
+				<li>
+					<img src="https://gss3.bdstatic.com/-Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=80e71532d858ccbf0fb1bd6878b1d75b/f9dcd100baa1cd1141b2cea0b012c8fcc3ce2d2d.jpg">
+					<div>
+						<dt>2011.04.17</dt>
+						<dt>Season 1</dt>
+						<dd>Season 1 initially focuses on the family of nobleman Eddard Stark, who is asked to become chief advisor to his king and longtime friend, Robert Baratheon. Ned must find out who killed the previous Hand of the King, Jon Arryn, while trying to protect his family from their rivals the Lannisters.</dd>
+					</div>
+				</li>
+				<li>
+					<img src="https://gss0.bdstatic.com/-4o3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=92e231e25943fbf2d121ae71d117a1e5/3801213fb80e7bec0059170b252eb9389a506b5c.jpg" >
+					<div>
+						<dt>2012.04.01</dt>
+						<dt>Season 2</dt>
+						<dd>Season 2 follows the dramatic death of Lord Eddard "Ned" Stark, with all of the Starks being separated across Westeros. Season two mainly centres around the War of the Five Kings, fought between the leaders of Westerosi factions who are either staking a claim on the Iron Throne, or seeking independence from it.</dd>
+					</div>
+				</li>
+				<li>
+					<img src="https://gss2.bdstatic.com/9fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=957f42832f2dd42a4b0409f9625230d0/96dda144ad345982f0e2f27806f431adcaef84eb.jpg">
+					<div>
+						<dt>2013.03.31</dt>
+						<dt>Season 3</dt>
+						<dd>Season 3 follows the climactic battle at Kings Landing. Season three like the previous season mainly centers around the war of the five kings; after the death of Renly Baratheon, all four kings in Westeros believes to have a claim to the Iron Throne, besides Robb Stark, who seeks vengeance for the death of his father, Lord Eddard "Ned" Stark.</dd>
+					</div>
+				</li>
+				<li>
+					<img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike933%2C5%2C5%2C933%2C330/sign=0760191d953df8dcb23087c3ac7819ee/48540923dd54564ee5f7f3d3b9de9c82d0584f4d.jpg">
+					<div>
+						<dt>2014.04.06</dt>
+						<dt>Season 4</dt>
+						<dd>Season 4 like the previous seasons mainly centres around the war of the five kings; after the death of Robb Stark at The Red Wedding, all three remaining kings in Westeros believe to have a claim to the Iron Throne. Meanwhile, at the wall, Jon Snow and the Night's Watch get ready for the battle against the free folk.</dd>
+					</div>
+				</li>
+				<li>
+					<img src="https://gss3.bdstatic.com/7Po3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike933%2C5%2C5%2C933%2C330/sign=88bf3305a3ec8a1300175fb2966afaea/3812b31bb051f819598b14a0d0b44aed2f73e7aa.jpg">
+					<div>
+						<dt>2015.04.12</dt>
+						<dt>Season 5</dt>
+						<dd>Season 5 primarily adapts material from A Feast for Crows and A Dance with Dragons, the fourth and fifth novels in George R. R. Martin's A Song of Ice and Fire series, though it also uses elements from the third novel, A Storm of Swords, as well as the upcoming sixth novel The Winds of Winter</dd>
+					</div>
+				</li>
+				<li>
+					<img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike933%2C5%2C5%2C933%2C330/sign=beb0027e4c2309f7f362a54013676796/1e30e924b899a901bdf24cdc17950a7b0308f511.jpg">
+					<div>
+						<dt>2016.04.24</dt>
+						<dt>Season 6</dt>
+						<dd>Season 6 follows the continuing struggle between the Starks and other noble families of Westeros for the Iron Throne. The Starks defeat the Bolton forces in battle, and Jon Snow is proclaimed the King in the North. Tyrion attempts to rule Meereen while Daenerys is held captive by a Dothraki tribe.</dd>
+					</div>
+				</li>
+				<li>
+					<img src="https://gss1.bdstatic.com/9vo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike272%2C5%2C5%2C272%2C90/sign=5a3d6a8e0323dd54357eaf3ab060d8bb/c8177f3e6709c93de1e1181d953df8dcd00054cc.jpg">
+					<div>
+						<dt>2017.07.16</dt>
+						<dt>Season 7</dt>
+						<dd>Season 7 focuses on featuring major events such as Daenerys Targaryen arriving in Westeros waging war against the Lannisters, Jon Snow forging an alliance with Daenerys in an attempt to unite their forces against the White Walker army,  and the army of the dead breaching the Wall (with the help of a reanimated wight dragon) and entering the Seven Kingdoms.</dd>
+					</div>
+				</li>
+			</ul>
+			<div class="blk">
+				<p>TO BE CONTINUED!</p>
+			</div>
+		</section>
+		<section id="team">
+			<h1>TEAM</h1>
+			<i>Team Members</i>
+			<div class="layout">
+				<div class="ct">
+					<img src="http://chelseabondjewelry.com/wp-content/uploads/2015/09/Jeremy-Podeswa_Chelsea-Bond-Jewelry_cufflinks_Hollywood_Game-of-Thrones_Emmys.jpg">
+					<h2>Jeremy Podeswa</h2>
+					<p>Director</p>
+					<a href=""><span class="iconfont icon-twitter"></span></a>
+					<a href="https://www.facebook.com/jeremy.podeswa"><span class="iconfont icon-facebook"></span></a>
+					<a href=""><span class="iconfont icon-instagram"></span></a>
+				</div>
+				<div class="ct">
+					<img src="https://image.tmdb.org/t/p/original/e8besvnWIcbvD8NLjcsi5jmxxOe.jpg">
+					<h2>Mark Mylod</h2>
+					<p>Director</p>
+					<a href=""><span class="iconfont icon-twitter"></span></a>
+					<a href=""><span class="iconfont icon-facebook"></span></a>
+					<a href=""><span class="iconfont icon-instagram"></span></a>
+				</div>
+				<div class="ct">
+					<img src="https://image.tmdb.org/t/p/w500/8CuuNIKMzMUL1NKOPv9AqEwM7og.jpg">
+					<h2>David Benioff</h2>
+					<p>Screenwriter/Television produce</p>
+					<a href=""><span class="iconfont icon-twitter"></span></a>
+					<a href=""><span class="iconfont icon-facebook"></span></a>
+					<a href=""><span class="iconfont icon-instagram"></span></a>
+				</div>
+			</div>
+		</section>
+		<section id="contact">
+			<h1>CONTACT</h1>
+			<i>Winter is coming!</i>
+			<div class="blk clearfix">
+			<div class="ct">
+				<input type="text" placeholder="YOUR NAME＊">
+				<input type="text" placeholder="YOUR EMAIL＊">
+				<input type="text" placeholder="YOUR PHONE＊">
+			</div>
+			<div class="ct">
+				<textarea cols="30" rows="10" placeholder="YOUR MESSAGE＊"></textarea>
+			</div>
+			</div>	
+				<a class="btn">SEND MESSAGE</a>
+		</section>
+	</main>
+	<div class="layout footer">
+		<div>
+			<p>Copyright © Your Website 2017</p>
+		</div>
+		<div>
+		<a href=""><span class="iconfont icon-twitter"></span></a>
+		<a href=""><span class="iconfont icon-facebook"></span></a>
+		<a href=""><span class="iconfont icon-instagram"></span></a>
+		</div>
+		<div>
+			<ul>
+				<li><a href="">Privacy Policy</a></li>
+				<li><a href="">Terms of Use</a></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
