@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>login</title>
+	<link rel="stylesheet" href="https://unpkg.com/font-awesome/css/font-awesome.min.css">
+
+	<style>
+		*{
+			margin:0;
+			padding: 0;
+			box-sizing:content-box;
+		}
+		html,body,main{
+			height: 100%;
+			
+		}
+		body{
+			background: linear-gradient(to top right, rgba(38,50,105,0.7),rgba(255,152,0,0.45)) center center no-repeat;
+		}
+		a{
+			text-decoration: none;
+			color:#000;
+		}
+		input:focus {
+			outline: none;
+		}
+		.errmsg {
+			font-size: 12px;
+			color: #FFCC22;
+
+		}
+		.clearfix::after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		header > a{
+			font-size: 20px;
+			float:right;
+			margin:10px 10px 0 0;
+		}
+		.flip-modal{
+			display: none;
+		}
+		.modal{
+			background-color: #fff;
+			padding: 30px;
+			position: absolute;
+			top:50%;
+			left:50%;
+			transform: translate(-50%,-50%);
+		}
+		.flip-modal > a {
+			line-height: 30px;
+			font-color: #fff;
+		}
+		.fa-window-close {
+			float: right;
+			margin: 0 0px 0 0 ;
+		}
+		.tabs {
+			text-align: center;
+			margin:0 10px 20px 0;
+		}
+		.tabs a {
+			margin: 0 5px;
+			padding-bottom: 5px;
+		}
+		.modal-login .tabs a:nth-child(1){
+			border-bottom: 2px solid #000;
+		}
+		.modal-register .tabs a:nth-child(2){
+			border-bottom: 2px solid #000;
+		}
+		.content div {
+			margin:6px 0;
+		}
+		.username input,.userpassword input{
+			width: 300px;
+			padding: 10px 10px;
+			margin: 5px 0px;
+			text-indent: 20px;
+			font-size: 16px;
+		}
+		.btn input {
+			padding: 8px 10px;
+			border: none;
+			background-color: #fff;
+			box-shadow: 0 0 2px rgba(0,0,0,0.4);
+		}
+		.fa-user-o,.fa-key {
+			position: absolute;
+			margin-top: 17px;
+			margin-left: 10px;
+			
+		}	
+		.flip-modal.login > .modal-login,
+		.flip-modal.register >.modal-register {
+			transform: translate(-50%,-50%)rotateY(0deg);
+			backface-visibility: hidden;
+			transition: all 1s;
+		}
+		.flip-modal.register > .modal-login,
+		.flip-modal.login > .modal-register {		
+			transform: translate(-50%,-50%)rotateY(180deg);
+			backface-visibility: hidden;
+			transition: all 1s;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<a href="#">
+			<i class="fa fa-user-circle" aria-hidden="true"></i>
+		</a>
+	</header>
+	<main>
+	<div class="flip-modal login">
+		<div class="modal modal-login">
+			<a href="#">
+				<i class="fa fa-window-close" aria-hidden="true"></i>
+			</a>
+			<div class="tabs">
+				<a href="#" class="loginlink">登录</a>
+				<a href="#" class="registerlink">注册</a>
+			</div>
+			<div class="content">
+				<div class="errmsg">
+				</div>
+				<form action="">
+					<div class="username">
+						<i class="fa fa-user-o" aria-hidden="true"></i>
+						<input type="text" name="user" placeholder="用户名">
+					</div>
+					<div class="userpassword">
+						<i class="fa fa-key" aria-hidden="true"></i>
+						<input type="password" name="password" placeholder="密码">
+					</div>
+					<div class="btn">
+						<input type="submit" value="登录">
+					</div>
+				</form>
+			</div>	
+		</div>
+		<div class="modal modal-register">
+			<a href="#"><i class="fa fa-window-close" aria-hidden="true"></i></a>
+			<div class="tabs">
+				<a href="#" class="loginlink">登录</a>
+				<a href="#" class="registerlink">注册</a>
+			</div>
+			<div class="content">
+				<div class="errmsg">
+				</div>
+				<form action="">
+					<div class="username">
+						<i class="fa fa-user-o" aria-hidden="true"></i>
+						<input type="text" name="user" placeholder="输入用户名">
+					</div>
+					<div class="userpassword">
+						<i class="fa fa-key" aria-hidden="true"></i>
+						<input type="password" name="password" placeholder="输入密码">
+					</div>
+					<div class="userpassword">
+						<i class="fa fa-key" aria-hidden="true"></i>
+						<input type="password2" name="password2" placeholder="再次输入密码">
+					</div>
+					<div class="btn">
+						<input type="submit" value="注册">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	</main>
+	<script>
+		function $(selector){
+  			return document.querySelector(selector)
+		}
+		function $$(selector){
+		  return document.querySelectorAll(selector)
+		}
+		$('.flip-modal').addEventListener('click',function(e){
+			e.stopPropagation();
+		})
+		
+		$$('.loginlink').forEach(function(node){
+			node.onclick=function(){
+				$('.flip-modal').classList.remove('register');
+				$('.flip-modal').classList.add('login');
+			}
+		})
+
+		$$('.registerlink').forEach(function(node){
+			node.onclick=function(){
+				$('.flip-modal').classList.remove('login');
+				$('.flip-modal').classList.add('register');				
+			}
+		})
+		$('.fa-user-circle').onclick=(function(){
+			$('.flip-modal').style.display="block";
+		})
+		$('.fa-window-close').onclick=(function(){
+			$('.flip-modal').style.display="none";
+		})
+		$('main').addEventListener('click',function(){				
+			$('.flip-modal').style.display="none";
+		})
+
+		$('.modal-login form').addEventListener('submit',function(e){
+			e.preventDefault();
+			if(!/^\w{3,8}$/.test($('.modal-login input[name=user]').value)){
+				$('.modal-login .errmsg').innerText = "用户名需输入3～8个字符，包括字母数字下划线"
+				return false;
+			}
+			if(!/^\w{6,8}$/.test($('.modal-login input[name=password]').value)){
+				$('.modal-login .errmsg').innerText = "密码需输入6～8个字符，包括字母数字下划线"
+				return false;
+			}
+			this.submit();
+		})
+		$('.modal-register form').addEventListener('submit',function(e){
+			e.preventDefault();
+			if(!/^\w{3,8}$/.test($('.modal-register input[name=user]').value)){
+				$('.modal-register .errmsg').innerText = "用户名需输入3～8个字符，包括字母数字下划线"
+				return false;
+			}
+			if(/^ltt$/.test($('.modal-register input[name=user]').value)){
+				$('.modal-register .errmsg').innerText = "用户已存在"
+				return false;
+			}
+			if(!/^\w{6,8}$/.test($('.modal-register input[name=password]').value)){
+				$('.modal-register .errmsg').innerText = "密码需输入6～8个字符，包括字母数字下划线"
+				return false;
+			}
+			if($('.modal-register input[name=password]').value!==$('.modal-register input[name=password2]').value){
+				$('.modal-register .errmsg').innerText = "两次密码不一致"
+				return false;
+			}
+			this.submit();
+		})
+	</script>
+</body>
+</html>
