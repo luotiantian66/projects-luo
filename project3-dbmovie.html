@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>豆瓣电影</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+	<link rel="stylesheet" href="https://at.alicdn.com/t/font_532383_mvtoh8vbfyeyu8fr.css">
+	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+	<style>
+		* {
+			margin:0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+		a {
+			text-decoration: none;
+			color: #666666;
+		}
+		.clearfix::after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+		html,body {
+			height: 100%;
+		}
+		body {
+			position: relative;
+		}
+		main {
+			height: calc(100vh - 50px);
+			overflow: scroll;
+			-webkit-overflow-scrolling:touch;
+		}
+
+		footer {
+			position: absolute;
+			bottom: 0;
+			background-color: 
+			height: 50px;
+			width: 100%;
+			display: flex;
+			border-top: 1px solid #DDDDDD;
+		}
+
+		footer div {
+			flex: 1;
+			text-align: center;
+			color: #666666;
+			font-size: 12px;
+		}
+		footer .active {
+			color: #FF8800;
+		}
+		footer span {
+			display: block;
+			margin:6px 0;
+		}
+		section.hide{
+			display: none;
+		}
+		.blk {
+			border-bottom: 1px solid #DDDDDD;
+		}
+		.blk div {
+			float: left;
+		}
+		.pic img{
+			width: 80px;
+			margin:8px;
+		}
+		.info {
+			padding-top: 10px;
+			width: 264px;
+			font-size: 12px;
+			line-height: 22px;
+		}
+		.info span:nth-child(1){
+			color: red;
+		}
+		
+		div.loading{
+			display: block;
+			padding: 10px;
+			text-align: center;
+		}
+		.search .loading {
+			display: none;
+		}
+		.search .loading.active {
+			display: block;
+			padding: 10px;
+			text-align: center;
+		}
+		.loading span {
+			font-size: 18px;
+
+			display: inline-block;
+			animation: rotate 2s linear infinite;
+		}
+
+		@keyframes rotate {
+			0% {transform: rotate(0deg);}
+			25% {transform: rotate(90deg);}
+			50% {transform: rotate(180deg);}
+			100% {transform: rotate(360deg);}
+		}
+		.searchPanel {
+			width: 100%;
+			height: 50px;
+			padding: 10px 0;
+			border-bottom: 1px solid #DDDDDD;
+		}
+		input {
+			width: 80%;
+			height: 30px;
+			margin-left: 10px;
+			padding-left: 5px;
+			outline: none;
+			border:none;
+			line-height: 15px;
+			background-color: #E0E0E0;
+			border-radius: 3px;
+		}
+		button {
+			outline: none;
+			font-size: 12px;
+			color: white;
+			padding: 8px;
+			background-color: #FF8800
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<section class="top250">
+			<div class="container">
+			</div>
+			<div class="loading">
+				<span class="iconfont icon-loading"></span>
+			</div>
+		</section>
+		<section class="beimei hide">
+			<div class="container">
+				
+			</div>
+		</section>
+		<section class="search hide">
+			<div class="searchPanel">
+				<input type="text" placeholder="输入搜索">
+				<button>搜索</button>
+			</div>
+			<div class="container">	
+			</div>
+			<div class="loading">
+				<span class="iconfont icon-loading"></span>
+			</div>
+		</section>
+	</main>
+	<footer>
+		<div class="active"><span class="iconfont icon-rank"></span><span>Top250</span></div>
+		<div><span class="iconfont icon-beimei"></span><span>北美</span></div>
+		<div><span class="iconfont icon-search"></span><span>搜索</span></div>
+	</footer>
+
+	<script>
+		//获取数据
+		// var num = 0
+		// getData()
+		// var isLoading = false
+		// function getData(){
+		// 	if(isLoading) return
+		// 	isLoading = true;
+		// 	$.ajax({
+		// 		url: 'http://api.douban.com/v2/movie/top250',
+		// 		type:'GET',
+		// 		data:{
+		// 			start:num,
+		// 			count:20
+		// 		},
+		// 		dataType:'jsonp'
+		// 	}).done(function(ret){
+		// 		//console.log(ret)
+		// 		console.log(ret.subjects)
+		// 		setData(ret)
+		// 		num +=20
+		// 	}).fail(function(){
+		// 		console.log("Error")
+		// 	}).always(function(){
+		// 		isLoading = false
+		// 	})
+		// }
+
+		//根据数据修改节点
+		// function setData(Data){
+		// 	Data.subjects.forEach(function(movie){
+		// 		var temp = `<div class="blk clearfix">
+		// 		<a href="#">
+		// 			<div class="pic">
+		// 				<img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p480747492.jpg">
+		// 			</div>
+		// 			<div class="info">
+		// 				<h1>肖申克的救赎</h1>
+		// 				<p>
+		// 				<span>9.6</span>
+		// 				<span>分/</span>
+		// 				<span>1187401</span>
+		// 				<span>收藏</span>
+		// 				</p>
+		// 				<p>1994/犯罪/剧情</p>
+		// 				<p>导演：弗兰克·德拉邦特</p>
+		// 				<p>主演：蒂姆·罗宾斯、摩根·弗里曼、鲍勃·冈顿</p>
+		// 			</div>
+		// 		</a>
+		// 	</div>`
+
+		// 		var $node = $(temp)
+		// 		$node.find('img').attr('src', movie.images.small)
+		// 		$node.find('h1').text(movie.title)
+		// 		$node.find('span:eq(0)').text(movie.rating.average)
+		// 		$node.find('span:eq(2)').text(movie.collect_count)
+		// 		$node.find('p:eq(1)').text(function(){
+		// 			return movie.year + '/' + movie.genres.join('/')
+		// 		})
+		// 		$node.find('p:eq(2)').text(function(){
+		// 			var Dname = ''
+		// 			for(var key in movie.directors){
+		// 				Dname = Dname  + '、' + movie.directors[key].name 
+		// 			}
+		// 			Dname = Dname.slice(1,Dname.length)
+		// 			return '导演：' + Dname
+		// 		})
+		// 		$node.find('p:eq(3)').text(function(){
+		// 			var Casts = ''
+		// 			for(var key in movie.casts){
+		// 				Casts = Casts + '、' + movie.casts[key].name
+		// 			}
+		// 			Casts = Casts.slice(1,Casts.length)
+		// 			return '主演：' + Casts
+		// 		})
+		// 		$('.container').eq(0).append($node)
+		// 	})
+		// }
+
+		//判断滚动到底，加载数据，loading转圈
+		//var clock
+		// $('main').scroll(function(){
+		// 	if(clock){
+		// 		clearTimeout(clock)
+		// 	}
+		// 	clock = setTimeout(function(){
+		// 		if($('main').scrollTop()+ $('main').height()+10 >= $('section').eq(0).height()){
+		// 			getData()
+		// 			$('.loading').addClass('active')
+		// 		}	
+		// 	},300)		
+		// })
+
+		// //footer按钮切换
+		// $('footer').on('click','div',function(){
+		// 	$('section').eq($(this).index()).removeClass('hide').siblings().addClass('hide')
+		// 	$(this).addClass('active').siblings().removeClass('active')
+		// })
+
+
+	var top250 = {
+		init:function(){
+			this.$roller = $('main')
+			this.$section = $('section')
+			this.$loading = $('.top250 .loading')
+			this.isLoading = false
+			this.$container = $('.container')
+			num = 0
+			this.bind()
+			this.start()
+		},
+		bind:function(){       //绑定事件（滚动）
+			var _this = this
+			var clock
+			this.$roller.scroll(function(){
+				if(clock){
+					clearTimeout(clock)
+				}
+				var __this = _this
+				clock = setTimeout(function(){
+					if(__this.$roller.scrollTop()+ __this.$roller.height()+10 >= __this.$section.eq(0).height()){
+					__this.getData()
+					//__this.$loading.addClass('active')
+					}	
+				},300)		
+			})
+		},
+		start:function(){		
+			var _this = this
+			this.getData(function(data){
+				_this.setData(data)
+			})
+		},
+		getData:function(callback){
+			var _this = this
+			if(this.isLoading) return
+			this.isLoading = true
+
+			$.ajax({
+				url: 'http://api.douban.com/v2/movie/top250',
+				type:'GET',
+				data:{
+					start:num,
+					count:20
+				},
+				dataType:'jsonp'
+			}).done(function(ret){
+				console.log(ret)
+				_this.setData(ret)
+				num +=20
+			}).fail(function(){
+				console.log("Error")
+			}).always(function(){
+				_this.isLoading = false
+			})
+		},
+		setData:function(data){
+			var _this = this
+			data.subjects.forEach(function(movie){
+				var temp = `<div class="blk clearfix">
+				<a href="#">
+					<div class="pic">
+						<img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p480747492.jpg">
+					</div>
+					<div class="info">
+						<h1>肖申克的救赎</h1>
+						<p>
+						<span>9.6</span>
+						<span>分/</span>
+						<span>1187401</span>
+						<span>收藏</span>
+						</p>
+						<p>1994/犯罪/剧情</p>
+						<p>导演：弗兰克·德拉邦特</p>
+						<p>主演：蒂姆·罗宾斯、摩根·弗里曼、鲍勃·冈顿</p>
+					</div>
+				</a>
+			</div>`
+				var $node = $(temp)
+				$node.find('img').attr('src', movie.images.small)
+				$node.find('h1').text(movie.title)
+				$node.find('span:eq(0)').text(movie.rating.average)
+				$node.find('span:eq(2)').text(movie.collect_count)
+				$node.find('p:eq(1)').text(function(){
+					return movie.year + '/' + movie.genres.join('/')
+				})
+				$node.find('p:eq(2)').text(function(){
+					var Dname = ''
+					for(var key in movie.directors){
+						Dname = Dname  + '、' + movie.directors[key].name 
+					}
+					Dname = Dname.slice(1,Dname.length)
+					return '导演：' + Dname
+				})
+				$node.find('p:eq(3)').text(function(){
+					var Casts = ''
+					for(var key in movie.casts){
+						Casts = Casts + '、' + movie.casts[key].name
+					}
+					Casts = Casts.slice(1,Casts.length)
+					return '主演：' + Casts
+				})
+				_this.$container.eq(0).append($node)
+				_this.$loading.removeClass('active')
+			})
+		}
+	}
+
+	var beimei = {
+			init:function(){
+				this.$roller = $('main')
+				this.$section = $('section')
+				this.$container = $('.container')
+				this.bind()
+				this.start()
+			},
+			bind:function(){
+				var _this = this
+				var clock
+				this.$roller.scroll(function(){
+					if(clock){
+						clearTimeout(clock)
+					}
+					var __this = _this
+					clock = setTimeout(function(){
+						if(__this.$roller.scrollTop()+ __this.$roller.height()+10 >= __this.$section.eq(0).height()){
+						__this.getData()
+						}	
+					},300)		
+				})
+			},
+			start:function(){
+				var _this = this
+				this.getData(function(data){
+					_this.setData(data)
+				})
+			},
+			getData:function(){
+				var _this = this			
+				$.ajax({
+					url: 'http://api.douban.com/v2/movie/us_box',
+					type:'GET',
+					dataType:'jsonp'
+				}).done(function(ret){
+					//console.log(ret)
+					//console.log(ret.subjects)
+					 _this.setData(ret)
+				}).fail(function(){
+					console.log("Error")
+				})
+			},
+			setData:function(data){
+				var _this = this
+
+				data.subjects.forEach(function(movie){
+					var contents = movie.subject
+					//console.log(contents)
+					//console.log(contents.images.small)
+					var temp = `<div class="blk clearfix">
+					<a href="#">
+						<div class="pic">
+							<img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p480747492.jpg">
+						</div>
+						<div class="info">
+							<h1>肖申克的救赎</h1>
+							<p>
+							<span>9.6</span>
+							<span>分/</span>
+							<span>1187401</span>
+							<span>收藏</span>
+							</p>
+							<p>1994/犯罪/剧情</p>
+							<p>导演：弗兰克·德拉邦特</p>
+							<p>主演：蒂姆·罗宾斯、摩根·弗里曼、鲍勃·冈顿</p>
+						</div>
+					</a>
+					</div>`
+					var $node = $(temp)
+					$node.find('img').attr('src', contents.images.small)
+					$node.find('h1').text(contents.title)
+					$node.find('span:eq(0)').text(contents.rating.average)
+					$node.find('span:eq(2)').text(contents.collect_count)
+					$node.find('p:eq(1)').text(function(){
+						return contents.year + '/' + contents.genres.join('/')
+					})
+					$node.find('p:eq(2)').text(function(){
+						var Dname = ''
+						for(var key in contents.directors){
+							Dname = Dname  + '、' + contents.directors[key].name 
+						}
+						Dname = Dname.slice(1,Dname.length)
+						return '导演：' + Dname
+					})
+					$node.find('p:eq(3)').text(function(){
+						var Casts = ''
+						for(var key in movie.casts){
+							Casts = Casts + '、' + contentse.casts[key].name
+						}
+						Casts = Casts.slice(1,Casts.length)
+						return '主演：' + Casts
+					})
+					_this.$container.eq(1).append($node)
+				})
+			}
+	}
+
+	var search = {
+			init:function(){
+				this.$roller = $('main')
+				this.$section = $('section')
+				this.$loading = $('.search .loading')
+				this.$isLoading = false
+				this.$container = $('.container')
+				this.$btn = $('button')
+				this.$input = $('input')
+				this.keyword = '' 
+				num = 0
+				this.bind()
+				
+			},
+			bind:function(){
+				var _this = this
+				var clock
+				
+				//绑定搜索
+				this.$btn.on('click',function(){
+					_this.$container.eq(2).text('')
+					_this.$loading.addClass('active')
+					_this.keyword = _this.$input.val()
+					_this.start()
+				})
+				//绑定滚动
+				this.$roller.scroll(function(){
+					if(clock){
+						clearTimeout(clock)
+					}
+					var __this = _this
+					clock = setTimeout(function(){
+						if(__this.$roller.scrollTop()+ __this.$roller.height()+10 >= __this.$section.eq(0).height()){
+						__this.getData()
+						__this.$loading.addClass('active')
+						}	
+					},300)		
+				})
+
+			},
+			start:function(){
+				var _this = this
+				this.getData(function(data){
+					_this.setData(data)
+				})
+			},
+			getData:function(keyword,callback){
+				var _this = this
+				if(this.$isLoading) return
+				this.$isLoading = true;
+				$.ajax({
+					url: 'http://api.douban.com/v2/movie/search',
+					data:{
+						start:num,
+						count:20,
+						q:_this.keyword
+					},
+					dataType:'jsonp'
+				}).done(function(ret){
+					console.log(ret.subjects)
+					 _this.setData(ret)
+					num +=20
+				}).fail(function(){
+					console.log("Error")
+				}).always(function(){
+					_this.$isLoading = false
+				})
+			},
+			setData:function(data){
+				var _this = this
+				data.subjects.forEach(function(movie){
+					var temp = `<div class="blk clearfix">
+					<a href="#">
+						<div class="pic">
+							<img src="https://img3.doubanio.com/view/photo/s_ratio_poster/public/p480747492.jpg">
+						</div>
+						<div class="info">
+							<h1>肖申克的救赎</h1>
+							<p>
+							<span>9.6</span>
+							<span>分/</span>
+							<span>1187401</span>
+							<span>收藏</span>
+							</p>
+							<p>1994/犯罪/剧情</p>
+							<p>导演：弗兰克·德拉邦特</p>
+							<p>主演：蒂姆·罗宾斯、摩根·弗里曼、鲍勃·冈顿</p>
+						</div>
+					</a>
+				</div>`
+					var $node = $(temp)
+					$node.find('img').attr('src', movie.images.small)
+					$node.find('h1').text(movie.title)
+					$node.find('span:eq(0)').text(movie.rating.average)
+					$node.find('span:eq(2)').text(movie.collect_count)
+					$node.find('p:eq(1)').text(function(){
+						return movie.year + '/' + movie.genres.join('/')
+					})
+					$node.find('p:eq(2)').text(function(){
+						var Dname = ''
+						for(var key in movie.directors){
+							Dname = Dname  + '、' + movie.directors[key].name 
+						}
+						Dname = Dname.slice(1,Dname.length)
+						return '导演：' + Dname
+					})
+					$node.find('p:eq(3)').text(function(){
+						var Casts = ''
+						for(var key in movie.casts){
+							Casts = Casts + '、' + movie.casts[key].name
+						}
+						Casts = Casts.slice(1,Casts.length)
+						return '主演：' + Casts
+					})
+					_this.$container.eq(2).append($node)
+					_this.$loading.removeClass('active')
+				})
+			}
+	}
+
+		var app = {
+			init: function(){
+				this.$tabs = $('footer div')
+				this.$panels = $('section')
+				this.bind()
+				top250.init()
+				beimei.init()
+				search.init()
+			},
+			bind: function(){			//footer切换
+				var _this = this
+				this.$tabs.on('click',function(){
+					_this.$panels.eq($(this).index()).removeClass('hide').siblings().addClass('hide')
+					$(this).addClass('active').siblings().removeClass('active')
+				})
+			}
+		}
+
+		app.init()
+	</script>
+</body>
+</html>
