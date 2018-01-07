@@ -535,6 +535,7 @@
 					console.log("Error")
 				}).always(function(){
 					_this.$isLoading = false
+					_this.$loading.removeClass('active')
 				})
 			},
 			setData:function(data){
