@@ -342,6 +342,7 @@
 				</a>
 			</div>`
 				var $node = $(temp)
+				$node.find('a').attr('href', movie.alt)
 				$node.find('img').attr('src', movie.images.small)
 				$node.find('h1').text(movie.title)
 				$node.find('span:eq(0)').text(movie.rating.average)
@@ -441,6 +442,7 @@
 					</a>
 					</div>`
 					var $node = $(temp)
+					$node.find('a').attr('href', contents.alt)
 					$node.find('img').attr('src', contents.images.small)
 					$node.find('h1').text(contents.title)
 					$node.find('span:eq(0)').text(contents.rating.average)
@@ -561,6 +563,7 @@
 					</a>
 				</div>`
 					var $node = $(temp)
+					$node.find('a').attr('href', movie.alt)
 					$node.find('img').attr('src', movie.images.small)
 					$node.find('h1').text(movie.title)
 					$node.find('span:eq(0)').text(movie.rating.average)
