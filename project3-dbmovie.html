@@ -4,6 +4,8 @@
 	<meta charset="UTF-8">
 	<title>豆瓣电影</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+	<meta name="x5-fullscreen" content="true">
+	<meta name="full-screen" content="yes">
 	<link rel="stylesheet" href="https://at.alicdn.com/t/font_532383_mvtoh8vbfyeyu8fr.css">
 	<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
 	<style>
@@ -621,8 +623,25 @@
 
 		app.init()
 		
-		document.querySelector('body').addEventListener('touchstart', function (ev) {
-		    event.preventDefault();
+		let scrollEle = document.body;
+		scrollEle.addEventListener('touchstart', (evt) => {
+		    // 修复微信的黑色弹性滚动与ios冲突问题
+		    let scrollTop = scrollEle.scrollTop;
+		    let scrollHeight = scrollEle.scrollHeight;
+		    let height = scrollEle.offsetHeight;
+		    let scrollTopTo;
+
+		    // 顶部
+		    scrollTopTo = Math.max(scrollTop, 1);
+
+		    // 底部
+		    if(scrollTopTo === scrollHeight - height) {
+		      scrollTopTo--;
+		    }
+
+		    if(scrollTop != scrollTopTo) {
+		      scrollEle.scrollTop = scrollTopTo;
+		    }
 		});
 	</script>
 </body>
