@@ -623,26 +623,42 @@
 
 		app.init()
 		
-		let scrollEle = document.body;
-		scrollEle.addEventListener('touchstart', (evt) => {
-		    // 修复微信的黑色弹性滚动与ios冲突问题
-		    let scrollTop = scrollEle.scrollTop;
-		    let scrollHeight = scrollEle.scrollHeight;
-		    let height = scrollEle.offsetHeight;
-		    let scrollTopTo;
 
-		    // 顶部
-		    scrollTopTo = Math.max(scrollTop, 1);
+function restoreEvent(ev) {
+    var _target = ev.target,
+    _ss = $(_target).parents().slice(-3)[0],
+    _point = ev.touches[0],
+    _top = _ss.scrollTop;
 
-		    // 底部
-		    if(scrollTopTo === scrollHeight - height) {
-		      scrollTopTo--;
-		    }
+    // 什么时候到底部
+    var _bottomFaVal = _ss.scrollHeight - _ss.offsetHeight;
 
-		    if(scrollTop != scrollTopTo) {
-		      scrollEle.scrollTop = scrollTopTo;
-		    }
-		});
+    if(_ss.id === 'smooth_scroll'){
+        // 到达顶端
+        if(_top === 0) {
+            // 阻止向下滑动
+            if(_point.clientY > Y) {
+                ev.preventDefault();
+            } else {
+                // 阻止冒泡
+                // 正常执行
+                ev.stopPropagation();
+            }
+        } else if(_top === _bottomFaVal) {
+            // 到达底部
+            // 阻止向上滑动
+            if(_point.clientY < Y) {
+                ev.preventDefault();
+            } else {
+                // 阻止冒泡
+                // 正常执行
+                ev.stopPropagation();
+            }
+    } else if(_top > 0 && _top < _bottomFaVal) {
+             ev.stopPropagation();
+    }
+}
+}
 	</script>
 </body>
 </html>
