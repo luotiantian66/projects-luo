@@ -31,17 +31,11 @@
 			-webkit-overflow-scrolling:touch;
 			overflow:hidden;
 		}
-		.wrapper {
-		  height: calc(100vh - 50px);
-		  overflow: auto;
-		  -webkit-overflow-scrolling: touch;
+		main {
+			height: calc(100vh - 50px);
+			overflow: scroll;
+			-webkit-overflow-scrolling:touch;
 		}
-
-		.sub-wrapper {
-		  height: 100%;
-		  overflow: auto;
-		}
-		
 
 		footer {
 			position: absolute;
@@ -149,8 +143,6 @@
 	</style>
 </head>
 <body>
-	<div class="wrapper">
-  	<div class="sub-wrapper">
 	<main class="scroller">
 		<section class="top250">
 			<div class="container">
@@ -176,8 +168,6 @@
 			</div>
 		</section>
 	</main>
-	</div>
-	</div>	
 	<footer>
 		<div class="active"><span class="iconfont icon-rank"></span><span>Top250</span></div>
 		<div><span class="iconfont icon-beimei"></span><span>北美</span></div>
@@ -634,28 +624,6 @@
 
 		app.init()
 		
-	function preventDefault(ev) {
-	  ev.preventDefault()
-	}
-
-	document.addEventListener('touchmove', preventDefault, false)
-	
-	function isScroller(el) {
-
-	  // 判断元素是否为 scroller
-	  return el.classList.contains('scroller')
-	}
-
-	document.body.addEventListener('touchmove', function (ev) {
-	  var target = ev.target
-
-	  // 在 scroller 上滑动，阻止事件冒泡，启用浏览器默认行为。
-	  if (isScroller(target)) {
-	    ev.stopPropagation()
-	  }
-	}, false)
-
-
 	</script>
 </body>
 </html>
