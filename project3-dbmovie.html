@@ -31,11 +31,17 @@
 			-webkit-overflow-scrolling:touch;
 			overflow:hidden;
 		}
-		main {
-			height: calc(100vh - 50px);
-			overflow: scroll;
-			-webkit-overflow-scrolling:touch;
+		.wrapper {
+		  height: calc(100vh - 50px);
+		  overflow: auto;
+		  -webkit-overflow-scrolling: touch;
 		}
+
+		.sub-wrapper {
+		  height: 100%;
+		  overflow: auto;
+		}
+		
 
 		footer {
 			position: absolute;
@@ -143,6 +149,8 @@
 	</style>
 </head>
 <body>
+	<div class="wrapper">
+  	<div class="sub-wrapper">
 	<main>
 		<section class="top250">
 			<div class="container">
@@ -168,6 +176,8 @@
 			</div>
 		</section>
 	</main>
+	</div>
+	</div>	
 	<footer>
 		<div class="active"><span class="iconfont icon-rank"></span><span>Top250</span></div>
 		<div><span class="iconfont icon-beimei"></span><span>北美</span></div>
@@ -624,42 +634,12 @@
 
 		app.init()
 		
+	function preventDefault(ev) {
+	  ev.preventDefault()
+	}
 
-function restoreEvent(ev) {
-    var _target = ev.target,
-    _ss = $(_target).parents().slice(-3)[0],
-    _point = ev.touches[0],
-    _top = _ss.scrollTop;
+	document.addEventListener('touchmove', preventDefault, false)
 
-    // 什么时候到底部
-    var _bottomFaVal = _ss.scrollHeight - _ss.offsetHeight;
-
-    if(_ss.id === 'smooth_scroll'){
-        // 到达顶端
-        if(_top === 0) {
-            // 阻止向下滑动
-            if(_point.clientY > Y) {
-                ev.preventDefault();
-            } else {
-                // 阻止冒泡
-                // 正常执行
-                ev.stopPropagation();
-            }
-        } else if(_top === _bottomFaVal) {
-            // 到达底部
-            // 阻止向上滑动
-            if(_point.clientY < Y) {
-                ev.preventDefault();
-            } else {
-                // 阻止冒泡
-                // 正常执行
-                ev.stopPropagation();
-            }
-    } else if(_top > 0 && _top < _bottomFaVal) {
-             ev.stopPropagation();
-    }
-}
-}
 	</script>
 </body>
 </html>
